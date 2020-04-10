@@ -1,0 +1,7 @@
+{
+  "name": "Slim Converter API",
+  "description": "Convert HTML / ERB to Slim template API",
+  "repository": "https://github.com/gizipp/slim-converter-api",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "keywords": ["html", "erb", "slim"]
+}

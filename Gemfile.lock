@@ -33,9 +33,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  html2slim
-  puma
-  sinatra
+  html2slim (~> 0.2.0)
+  puma (~> 4.3, >= 4.3.3)
+  sinatra (~> 2.0, >= 2.0.8.1)
   sinatra-contrib
 
 RUBY VERSION
