@@ -7,6 +7,6 @@ if workers_count > 1
   workers workers_count
 end
 
-rackup      DefaultRackup
-port        ENV['PORT']     || 5000
+rackup      'config.ru'
+port        ENV['PORT']     || 3000
 environment ENV['RACK_ENV'] || 'development'
