@@ -6,10 +6,12 @@ require 'slim'
 
 class SlimConverter < Sinatra::Base
   before do
-    # Allow requests from tools.gizipp.com
-    headers['Access-Control-Allow-Origin'] = 'https://tools.gizipp.com'
-    headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
-    headers['Access-Control-Allow-Headers'] = 'accept, authorization, origin, content-type'
+    set_cors_headers
+  end
+
+  before '/convert-to-slim', '/convert-to-html', '/convert-to-erb' do
+    @input_text = validate_input(params[:raw_text], "Raw text is required")
+    return if response.status == 400
   end
 
   options '*' do
@@ -21,35 +23,67 @@ class SlimConverter < Sinatra::Base
     json status: :ok
   end
 
-  post '/convert' do
+  post '/convert-to-slim' do
+    begin
+      json converted_text: convert_to_slim(@input_text)
+    rescue => e
+      status 400
+      json error: e.message
+    end
+  end
+
+  post '/convert-to-html' do
+    begin
+      json converted_text: convert_to_html(@input_text)
+    rescue => e
+      status 400
+      json error: e.message
+    end
+  end
+
+  post '/convert-to-erb' do
+    begin
+      json converted_text: convert_to_erb(@input_text)
+    rescue => e
+      status 400
+      json error: e.message
+    end
+  end
+
+  private
+
+  def set_cors_headers
+    headers['Access-Control-Allow-Origin'] = 'https://tools.gizipp.com'
+    headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+    headers['Access-Control-Allow-Headers'] = 'accept, authorization, origin, content-type'
+  end
+
+  def validate_input(text, error_message)
+    if text.nil? || text.empty?
+      status 400
+      json error: error_message
+      return nil
+    end
+    text.force_encoding('UTF-8')
+  end
+
+  def convert_to_slim(input_text)
     temp_file = Tempfile.new(['input', '.erb'])
     begin
-      temp_file.write(params[:raw_text])
+      temp_file.write(input_text)
       temp_file.rewind
-      json converted_text: HTML2Slim.convert!(temp_file, 'erb').to_s
+      HTML2Slim.convert!(temp_file, 'erb').to_s
     ensure
       temp_file.close
       temp_file.unlink
     end
   end
 
-  post '/convert-to-html' do
-    begin
-      # Validate input
-      if params[:raw_slim].nil? || params[:raw_slim].empty?
-        status 400
-        return json error: "Raw slim is required"
-      end
+  def convert_to_html(input_text)
+    Slim::Template.new { input_text }.render
+  end
 
-      # Ensure proper encoding
-      input_text = params[:raw_slim].force_encoding('UTF-8')
-      
-      # Convert Slim to HTML using Slim::Template
-      html = Slim::Template.new { input_text }.render
-      json converted_slim: html
-    rescue => e
-      status 400
-      json error: e.message
-    end
+  def convert_to_erb(input_text)
+    Slim::Template.new { input_text }.render
   end
 end
