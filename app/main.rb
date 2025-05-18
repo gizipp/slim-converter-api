@@ -1,17 +1,21 @@
 require "sinatra/base"
 require "sinatra/json"
-require 'html2slim'
+require 'html2slim/converter'
 require 'tempfile'
 require 'slim'
+require 'slim/erb_converter'
 
 class SlimConverter < Sinatra::Base
-  before do
-    set_cors_headers
+  configure :test do
+    set :protection, except: :http_origin
   end
 
-  before '/convert-to-slim', '/convert-to-html', '/convert-to-erb' do
+  before %r{/convert-to-(slim|html|erb|html-erb)} do
     @input_text = validate_input(params[:raw_text], "Raw text is required")
-    return if response.status == 400
+  end
+
+  after do
+    set_cors_headers
   end
 
   options '*' do
@@ -41,7 +45,7 @@ class SlimConverter < Sinatra::Base
     end
   end
 
-  post '/convert-to-erb' do
+  post '/convert-to-html-erb' do
     begin
       json converted_text: convert_to_erb(@input_text)
     rescue => e
@@ -60,15 +64,13 @@ class SlimConverter < Sinatra::Base
 
   def validate_input(text, error_message)
     if text.nil? || text.empty?
-      status 400
-      json error: error_message
-      return nil
+      halt 400, json(error: error_message)
     end
     text.force_encoding('UTF-8')
   end
 
   def convert_to_slim(input_text)
-    temp_file = Tempfile.new(['input', '.erb'])
+    temp_file = Tempfile.new(['input', '.html.erb'])
     begin
       temp_file.write(input_text)
       temp_file.rewind
@@ -84,6 +86,6 @@ class SlimConverter < Sinatra::Base
   end
 
   def convert_to_erb(input_text)
-    Slim::Template.new { input_text }.render
+    Slim::ERBConverter.new.call(input_text)
   end
 end
