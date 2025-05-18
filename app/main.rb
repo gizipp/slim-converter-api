@@ -70,7 +70,7 @@ class SlimConverter < Sinatra::Base
   end
 
   def convert_to_slim(input_text)
-    temp_file = Tempfile.new(['input', '.html.erb'])
+    temp_file = Tempfile.new(['input', '.erb'])
     begin
       temp_file.write(input_text)
       temp_file.rewind
