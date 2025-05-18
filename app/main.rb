@@ -46,7 +46,7 @@ class SlimConverter < Sinatra::Base
       
       # Convert Slim to HTML using Slim::Template
       html = Slim::Template.new { input_text }.render
-      json converted_text: html
+      json converted_slim: html
     rescue => e
       status 400
       json error: e.message
