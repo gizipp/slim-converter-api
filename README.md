@@ -20,7 +20,9 @@ This API powering [HTML / ERB to Slim Converter](https://tools.gizipp.com/html-e
 
 ## Usage
 
-### Via curl
+### HTML/ERB to Slim Conversion
+
+#### Via curl
 
 ```bash
 curl --location --request POST 'https://slim-converter-api.gizipp.com/convert' --header 'Content-Type: application/x-www-form-urlencoded' --data-urlencode 'raw_text=<html>
@@ -35,7 +37,7 @@ curl --location --request POST 'https://slim-converter-api.gizipp.com/convert' -
  </html>'
  ```
 
-### Via Jquery
+#### Via Jquery
 
 https://playcode.io/552904
 
@@ -54,6 +56,41 @@ form.append("raw_text", `<html>
 
 var settings = {
   "url": "https://slim-converter-api.gizipp.com/convert",
+  "method": "POST",
+  "timeout": 0,
+  "processData": false,
+  "mimeType": "multipart/form-data",
+  "contentType": false,
+  "data": form
+};
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+### Slim to HTML Conversion
+
+#### Via curl
+
+```bash
+curl --location --request POST 'https://slim-converter-api.gizipp.com/convert-to-html' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'raw_text=div.container
+  h1 Hello World
+  p This is a paragraph'
+```
+
+#### Via Jquery
+
+```javascript
+var form = new FormData();
+form.append("raw_text", `div.container
+  h1 Hello World
+  p This is a paragraph`);
+
+var settings = {
+  "url": "https://slim-converter-api.gizipp.com/convert-to-html",
   "method": "POST",
   "timeout": 0,
   "processData": false,
