@@ -23,7 +23,7 @@ This API powering [HTML / ERB to Slim Converter](https://tools.gizipp.com/html-e
 ### Via curl
 
 ```bash
-curl --location --request POST 'https://slim-converter-api.herokuapp.com/convert' --header 'Content-Type: application/x-www-form-urlencoded' --data-urlencode 'raw_text=<html>
+curl --location --request POST 'https://slim-converter-api.gizipp.com/convert' --header 'Content-Type: application/x-www-form-urlencoded' --data-urlencode 'raw_text=<html>
    <head>
      <title>Enter Your Code Here</title>
    <%= foo = [1,2,3] %>
@@ -53,7 +53,7 @@ form.append("raw_text", `<html>
  </html>`);
 
 var settings = {
-  "url": "https://slim-converter-api.herokuapp.com/convert",
+  "url": "https://slim-converter-api.gizipp.com/convert",
   "method": "POST",
   "timeout": 0,
   "processData": false,
