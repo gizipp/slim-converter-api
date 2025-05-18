@@ -1,45 +1,61 @@
+GIT
+  remote: https://github.com/slim-template/html2slim.git
+  revision: e92e6bb80570dce0c413a6ff01b858754845df24
+  specs:
+    html2slim (0.2.0)
+      nokogiri
+
 GEM
   remote: https://rubygems.org/
   specs:
-    backports (3.17.0)
-    hpricot (0.8.6)
-    html2slim (0.2.0)
-      hpricot
-    multi_json (1.14.1)
-    mustermann (1.1.1)
+    base64 (0.2.0)
+    logger (1.7.0)
+    mini_portile2 (2.8.9)
+    multi_json (1.15.0)
+    mustermann (3.0.3)
       ruby2_keywords (~> 0.0.1)
     nio4r (2.7.4)
+    nokogiri (1.18.8)
+      mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
     puma (5.6.9)
       nio4r (~> 2.0)
-    rack (2.2.14)
-    rack-protection (2.0.8.1)
-      rack
-    ruby2_keywords (0.0.2)
-    sinatra (2.0.8.1)
-      mustermann (~> 1.0)
-      rack (~> 2.0)
-      rack-protection (= 2.0.8.1)
+    racc (1.8.1)
+    rack (3.1.15)
+    rack-protection (4.1.1)
+      base64 (>= 0.1.0)
+      logger (>= 1.6.0)
+      rack (>= 3.0.0, < 4)
+    rack-session (2.1.1)
+      base64 (>= 0.1.0)
+      rack (>= 3.0.0)
+    ruby2_keywords (0.0.5)
+    sinatra (4.1.1)
+      logger (>= 1.6.0)
+      mustermann (~> 3.0)
+      rack (>= 3.0.0, < 4)
+      rack-protection (= 4.1.1)
+      rack-session (>= 2.0.0, < 3)
       tilt (~> 2.0)
-    sinatra-contrib (2.0.8.1)
-      backports (>= 2.8.2)
-      multi_json
-      mustermann (~> 1.0)
-      rack-protection (= 2.0.8.1)
-      sinatra (= 2.0.8.1)
+    sinatra-contrib (4.1.1)
+      multi_json (>= 0.0.2)
+      mustermann (~> 3.0)
+      rack-protection (= 4.1.1)
+      sinatra (= 4.1.1)
       tilt (~> 2.0)
-    tilt (2.0.10)
+    tilt (2.6.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  html2slim (~> 0.2.0)
+  html2slim!
   puma (~> 5.6)
-  sinatra (~> 2.0, >= 2.0.8.1)
-  sinatra-contrib
+  sinatra (~> 4.1.1)
+  sinatra-contrib (~> 4.1.1)
 
 RUBY VERSION
-   ruby 2.6.5p114
+   ruby 3.3.4p94
 
 BUNDLED WITH
    2.1.4
