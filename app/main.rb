@@ -36,13 +36,13 @@ class SlimConverter < Sinatra::Base
   post '/convert-to-html' do
     begin
       # Validate input
-      if params[:raw_text].nil? || params[:raw_text].empty?
+      if params[:raw_slim].nil? || params[:raw_slim].empty?
         status 400
-        return json error: "Raw text is required"
+        return json error: "Raw slim is required"
       end
 
       # Ensure proper encoding
-      input_text = params[:raw_text].force_encoding('UTF-8')
+      input_text = params[:raw_slim].force_encoding('UTF-8')
       
       # Convert Slim to HTML using Slim::Template
       html = Slim::Template.new { input_text }.render
