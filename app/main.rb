@@ -5,13 +5,19 @@ require 'tempfile'
 
 class SlimConverter < Sinatra::Base
   before do
-    headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
-    headers['Access-Control-Allow-Origin'] = '*'
-    headers['Access-Control-Allow-Headers'] = 'accept, authorization, origin'
+    # Only allow requests from same origin
+    origin = request.env['HTTP_ORIGIN']
+    if origin && origin.start_with?(request.host)
+      headers['Access-Control-Allow-Origin'] = origin
+    end
+    
+    # Only allow GET and POST methods
+    headers['Access-Control-Allow-Methods'] = 'GET, POST'
+    headers['Access-Control-Allow-Headers'] = 'accept, authorization, origin, content-type'
   end
 
   options '*' do
-    response.headers['Allow'] = 'HEAD,GET,PUT,DELETE,OPTIONS,POST'
+    response.headers['Allow'] = 'GET, POST, OPTIONS'
     response.headers['Access-Control-Allow-Headers'] = 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Cache-Control, Accept'
   end
 
