@@ -1,5 +1,6 @@
 require "sinatra/base"
 require "sinatra/json"
+require 'html2slim'
 require 'html2slim/converter'
 require 'tempfile'
 require 'slim'
