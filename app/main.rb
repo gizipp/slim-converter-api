@@ -1,7 +1,6 @@
 require "sinatra/base"
 require "sinatra/json"
 require 'html2slim'
-require 'html2slim/converter'
 require 'tempfile'
 require 'slim'
 require 'slim/erb_converter'
@@ -71,14 +70,14 @@ class SlimConverter < Sinatra::Base
   end
 
   def convert_to_slim(input_text)
-    temp_file = Tempfile.new(['input', '.erb'])
+    file = Tempfile.new(['input', '.erb'])
     begin
-      temp_file.write(input_text)
-      temp_file.rewind
-      HTML2Slim.convert!(temp_file, 'erb').to_s
+      file.write(input_text)
+      file.rewind
+      HTML2Slim.convert!(file, :erb).to_s
     ensure
-      temp_file.close
-      temp_file.unlink
+      file.close
+      file.unlink
     end
   end
 

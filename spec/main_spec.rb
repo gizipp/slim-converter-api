@@ -37,6 +37,38 @@ RSpec.describe SlimConverter do
         expect(last_response).to be_ok
         expect(JSON.parse(last_response.body)['converted_text'].strip).to eq(expected_slim.strip)
       end
+
+      it 'converts HTML with ERB to Slim' do
+        html_with_erb = <<~HTML
+          <html>
+            <head>
+              <title>Enter Your HTML ERB Code Heree</title>
+            </head>
+            <body>
+              <% foo = [1,2,3] %>
+              <%- foo.each do |bar| %>
+                <p>Click Convert to test it out!</p>
+              <% end %>
+            </body>
+          </html>
+        HTML
+
+        expected_slim = <<~SLIM
+          html
+            head
+              title
+                | Enter Your HTML ERB Code Heree
+            body
+              |  <% foo = [1,2,3] %> <%- foo.each do |bar| %> 
+              p
+                | Click Convert to test it out!
+              |  <% end %> 
+        SLIM
+
+        post '/convert-to-slim', { raw_text: html_with_erb }
+        expect(last_response).to be_ok
+        expect(JSON.parse(last_response.body)['converted_text'].strip).to eq(expected_slim.strip)
+      end
     end
 
     context 'with invalid input' do

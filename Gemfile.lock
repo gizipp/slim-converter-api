@@ -1,39 +1,18 @@
-GIT
-  remote: https://github.com/slim-template/html2slim.git
-  revision: e92e6bb80570dce0c413a6ff01b858754845df24
-  specs:
-    html2slim (0.2.0)
-      nokogiri
-
 GEM
   remote: https://rubygems.org/
   specs:
     base64 (0.2.0)
     diff-lcs (1.6.2)
+    hpricot (0.8.6)
+    html2slim (0.2.0)
+      hpricot
     logger (1.7.0)
     multi_json (1.15.0)
     mustermann (3.0.3)
       ruby2_keywords (~> 0.0.1)
     nio4r (2.7.4)
-    nokogiri (1.18.8-aarch64-linux-gnu)
-      racc (~> 1.4)
-    nokogiri (1.18.8-aarch64-linux-musl)
-      racc (~> 1.4)
-    nokogiri (1.18.8-arm-linux-gnu)
-      racc (~> 1.4)
-    nokogiri (1.18.8-arm-linux-musl)
-      racc (~> 1.4)
-    nokogiri (1.18.8-arm64-darwin)
-      racc (~> 1.4)
-    nokogiri (1.18.8-x86_64-darwin)
-      racc (~> 1.4)
-    nokogiri (1.18.8-x86_64-linux-gnu)
-      racc (~> 1.4)
-    nokogiri (1.18.8-x86_64-linux-musl)
-      racc (~> 1.4)
     puma (6.4.3)
       nio4r (~> 2.0)
-    racc (1.8.1)
     rack (3.1.15)
     rack-protection (4.1.1)
       base64 (>= 0.1.0)
@@ -88,7 +67,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
-  html2slim!
+  html2slim
   puma (~> 6.4.0)
   rack-test
   rspec
